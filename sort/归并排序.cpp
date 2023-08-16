@@ -1,7 +1,3 @@
-/*
-归并 && 多线程归并 
-*/
-
 #include<iostream>
 #include <thread>
 #include <vector>
@@ -19,12 +15,10 @@ void mergeCount(int a[],int L,int mid,int R) {
 		else
 			tmp[k++] = a[j++];
 	}
-	///判断哪个?数组中有剩余的数据
 	while( i<=mid )
 		tmp[k++] = a[i++];
 	while( j<=R)
 		tmp[k++] = a[j++];
-	/// 将 tmp 中的数组拷?回 A[p...r]
 	for(int p=0; p<k; ++p)
 		a[L+p] = tmp[p];
 	delete tmp;
@@ -32,15 +26,15 @@ void mergeCount(int a[],int L,int mid,int R) {
 
 void mergeSort(int a[],int L,int R) {
 	if( L>=R ) { return; }
-	int mid = L + (R - L)/2;
-//	mergeSort(a,L,mid);
-//	mergeSort(a,mid+1,R);
-//	mergeCount(a,L,mid,R);
-	thread t1(std::bind(mergeSort,std::ref(a),L,mid));
-    thread t2(std::bind(mergeSort,std::ref(a),mid+1,R));
-    t1.join();
-    t2.join();
-    mergeCount(a,L,mid,R);
+	int mid = (R + L)/2;
+	mergeSort(a,L,mid);
+	mergeSort(a,mid+1,R);
+	mergeCount(a,L,mid,R);
+	// thread t1(std::bind(mergeSort,std::ref(a),L,mid));
+    // thread t2(std::bind(mergeSort,std::ref(a),mid+1,R));
+    // t1.join();
+    // t2.join();
+    // mergeCount(a,L,mid,R);
 	
 }
 

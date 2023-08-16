@@ -6,7 +6,7 @@
             "command": "g++",
             "args": [
                 "-fdiagnostics-color=always",
-                "-std=c11",
+                "-std=c++2a",
                 "-g",
                 "${file}",
                 "-o",
