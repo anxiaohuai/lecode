@@ -6,6 +6,7 @@
         "thread": "cpp",
         "vector": "cpp",
         "deque": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "sstream": "cpp"
     }
 }
