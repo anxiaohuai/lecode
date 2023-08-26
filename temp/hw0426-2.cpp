@@ -49,6 +49,8 @@ int main(){
 	cout<<free[0];
 }
 
+
+
 /*
 1 3
 3
