@@ -1,7 +1,5 @@
 #include<iostream>
-
 using namespace std;
-
 void Heapify(int a[], int n, int i) {
 	while (1) {
 		int maxPos = i;
@@ -23,7 +21,6 @@ void HeapSort(int a[], int n) {
 		Heapify(a,k,1);
 	}
 }
-
 int main() {
 	int a[] = {0,34,66,2,5,95,4,46,27};
 	HeapSort(a,sizeof(a)/sizeof(int));

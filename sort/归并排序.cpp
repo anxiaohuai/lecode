@@ -2,9 +2,10 @@
 #include <thread>
 #include <vector>
 #include <functional>
+#include <chrono>
 using namespace std;
 
-void mergeCount(int a[],int L,int mid,int R) {
+void mergeCount(vector<int> a,int L,int mid,int R) {
 	int *tmp = new int[L+mid+R];
 	int i=L;
 	int j=mid+1;
@@ -23,27 +24,33 @@ void mergeCount(int a[],int L,int mid,int R) {
 		a[L+p] = tmp[p];
 	delete tmp;
 }
-
-void mergeSort(int a[],int L,int R) {
+void mergeSort(vector<int> a,int L,int R) {
 	if( L>=R ) { return; }
 	int mid = (R + L)/2;
-	mergeSort(a,L,mid);
-	mergeSort(a,mid+1,R);
-	mergeCount(a,L,mid,R);
-	// thread t1(std::bind(mergeSort,std::ref(a),L,mid));
-    // thread t2(std::bind(mergeSort,std::ref(a),mid+1,R));
-    // t1.join();
-    // t2.join();
-    // mergeCount(a,L,mid,R);
+	// mergeSort(a,L,mid);
+	// mergeSort(a,mid+1,R);
+	// mergeCount(a,L,mid,R);
+	thread t1(std::bind(mergeSort,std::ref(a),L,mid));
+    thread t2(std::bind(mergeSort,std::ref(a),mid+1,R));
+    t1.join();
+    t2.join();
+    mergeCount(a,L,mid,R);
 	
 }
 
 int main() {
-	int a[] = {0,34,66,2,5,95,4,46,27};
+	vector<int> a = {34,66,2,5,95,4,46,27,1}
+	// vector<int> a;
+	// for(int i = 0;i<100000000/2;++i){
+	// 	a.push_back(i%501);
+	// }
+	// auto start = chrono::high_resolution_clock::now();
 	mergeSort(a, 0, sizeof(a)/sizeof(int));
-	for(int i=0; i<=8; ++i) {
+	// auto end = chrono::high_resolution_clock::now();
+	// auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+	// cout << "执行时间: " << duration.count() << " 微秒" << endl;
+	for(int i=0; i<a.size(); ++i) {
 		std::cout<<a[i]<<" "; // print => 0 2 4 5 27 34 46 66 95
 	}
-	std::cout<<endl;
 	return 0;
 }
